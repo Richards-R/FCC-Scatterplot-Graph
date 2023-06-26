@@ -21,22 +21,24 @@ let svg = d3.select('svg')
 req.open("GET", url, true);
 req.onload = () => {
   json = JSON.parse(req.responseText)
-  console.log(json.length)
-  console.log(json[0].Year)
+                                  console.log(json.length)
+                                  console.log(json[0].Year)
   for (let i=0; i<json.length; i++){
   scattArr.push([json[i].Year,json[i].Time,!json[i].Doping])}
-  console.log(scattArr);
+                                  console.log(scattArr);
   
   generateScales()
   //drawBars()
   //generateAxes()
   };
+                                  console.log(scattArr.length);
 req.send();
 
-console.log(scattArr);
+                                  console.log(scattArr.length);
 
 
 let generateScales = () => {
+                                  console.log(scattArr); 
   xScale = d3.scaleLinear()
     .domain([0, (scattArr.length -1)])
     .range([padding, w - padding]);
@@ -49,8 +51,14 @@ let generateScales = () => {
   
   datesArr = scattArr.map((item) => {
     return new Date(item[0])
-    })
-  
+    });                           
+                                   console.log(datesArr); 
+
+  timeArr = scattArr.map((item) => {
+    return new Date(item[1])
+    });
+                                   console.log(timeArr); 
+                                    
   xAxisScale = d3.scaleTime()
     .domain([d3.min(datesArr), d3.max(datesArr)])
     .range([padding, w - padding])
