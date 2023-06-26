@@ -70,13 +70,15 @@ let generateScales = () => {
     .range([padding, w - padding])
   
   yAxisScale = d3.scaleLinear()
-    .domain([d3.min(totalSecondsArr), d3.max(totalSecondsArr)])
+    .domain([d3.max(totalSecondsArr), d3.min(totalSecondsArr)])
     .range([h-padding, padding])
     }
 
 let  generateAxes = () =>{
-  let xAxis = d3.axisBottom(xAxisScale).tickFormat(d3.format("d"));
-  let yAxis = d3.axisLeft(yAxisScale).tickFormat(x => (x % 60) !== 0 ? `${Math.floor(x/60)}`+ ":" +  `${(x-(Math.floor(x/60)*60))}`: `${Math.floor(x/60)}`+ ":00")
+  let xAxis = d3.axisBottom(xAxisScale)
+                .tickFormat(d3.format("d"));
+  let yAxis = d3.axisLeft(yAxisScale)
+                .tickFormat(x => (x % 60) !== 0 ? `${Math.floor(x/60)}`+ ":" + `${(x-(Math.floor(x/60)*60))}` : `${Math.floor(x/60)}`+ ":00")
 
 
   svg.append("g")
