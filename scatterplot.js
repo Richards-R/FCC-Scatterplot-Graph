@@ -2,7 +2,7 @@ let url = 'https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/m
 let req = new XMLHttpRequest();
 
 let json = "";
-let scattArr = "";
+let scattArr = [];
 
 let xScale;
 let yScale;
@@ -23,14 +23,16 @@ req.onload = () => {
   json = JSON.parse(req.responseText)
   console.log(json.length)
   console.log(json[0].Year)
-  //for (let i=0; i<json.length; i++){
-   //scattArr.push([json[i].Year +", " + json[i].Time  +", " + !json[i].Doping])
-    //scattArr = (json[0].Year +", " + json[0].Time  +", " + !json[0].Doping)
-   generateScales()
-  drawBars()
-  generateAxes()
+  for (let i=0; i<json.length; i++){
+  scattArr.push([json[i].Year,json[i].Time,!json[i].Doping])}
+  console.log(scattArr);
+  
+  generateScales()
+  //drawBars()
+  //generateAxes()
   };
 req.send();
+
 console.log(scattArr);
 
 
@@ -58,9 +60,6 @@ let generateScales = () => {
     return d[1]})])
     .range([h-padding, padding])
     }
-
-
-
 
 
 
