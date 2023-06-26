@@ -6,6 +6,7 @@ let scattArr = [];
 let yearArr = [];
 let totalSecondsArr = [];
 let timeArr = [];
+let dotArr = [];
 
 let xScale;
 let yScale;
@@ -29,10 +30,9 @@ req.onload = () => {
   for (let i=0; i<json.length; i++){
   scattArr.push([json[i].Year,json[i].Time,!json[i].Doping])}
                                   console.log(scattArr);
-  
   generateScales()
-  //drawBars()
   generateAxes()
+  drawDots()
   };
                                   console.log(scattArr.length);
 req.send();
@@ -45,11 +45,13 @@ let generateScales = () => {
   xScale = d3.scaleLinear()
     .domain([0, (yearArr.length -1)])
     .range([padding, w - padding]);
+    console.log(xScale)
 
   yScale = d3.scaleLinear()
     .domain([0, d3.max(totalSecondsArr)])
     .range([0, h - (2*padding)]);
-  
+    console.log(yScale)
+
   yearArr = scattArr.map((item) => {
     return (item[0])
     });                           
@@ -64,10 +66,16 @@ let generateScales = () => {
     }))
                                     console.log(totalSecondsArr);      
                                     console.log(typeof totalSecondsArr[2]);    
-                                    
+              
+  for (let i=0; i<json.length; i++){
+    dotArr.push([scattArr[i][0],totalSecondsArr[i],scattArr[i][2]])}  
+    console.log(dotArr)
+
+
   xAxisScale = d3.scaleLinear()
     .domain([d3.min(yearArr), d3.max(yearArr)])
     .range([padding, w - padding])
+  
   
   yAxisScale = d3.scaleLinear()
     .domain([d3.max(totalSecondsArr), d3.min(totalSecondsArr)])
@@ -80,7 +88,6 @@ let  generateAxes = () =>{
   let yAxis = d3.axisLeft(yAxisScale)
                 .tickFormat(x => (x % 60) !== 0 ? `${Math.floor(x/60)}`+ ":" + `${(x-(Math.floor(x/60)*60))}` : `${Math.floor(x/60)}`+ ":00")
 
-
   svg.append("g")
     .call(xAxis)
     .attr("transform", "translate(0," + (h - padding) + ")")
@@ -90,8 +97,17 @@ let  generateAxes = () =>{
     .call(yAxis)
     .attr("transform", "translate (" + (padding) + ", 0)")
     .attr('id','y-axis')
-
-
     }
 
+  
+    let drawDots = () => {
+      svg.selectAll("dots")
+      .data(dotArr)
+      .join("circle")
+      .attr("class", "dot")
+      .attr("r", "5px")
+      .attr("cx",  (d)=>{return d[0]})
+      .attr("cy",  (d)=>{return d[1]})
+      .attr("fill", "black")
+    }
 
