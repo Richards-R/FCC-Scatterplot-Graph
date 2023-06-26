@@ -1,0 +1,20 @@
+body {
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
+}
+
+svg {
+  background-color: rgb(203, 243, 211)
+}
+
+#title{
+  font-size:x-large;
+  fill: rgb(46, 95, 114)
+}
+
+#subtitle{
+ 
+  fill: rgb(0, 98, 128)
+}
