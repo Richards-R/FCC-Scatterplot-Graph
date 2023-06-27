@@ -29,53 +29,40 @@ req.onload = () => {
                                   console.log(json[0].Year)
   for (let i=0; i<json.length; i++){
   scattArr.push([json[i].Year,json[i].Time,!json[i].Doping])}
-                                  console.log(scattArr);
   generateScales()
   generateAxes()
   drawDots()
   };
-                                  console.log(scattArr.length);
+                    
 req.send();
-
-                                  console.log(scattArr.length);
-
-
+                                             
 let generateScales = () => {
-                                  console.log(scattArr); 
-  xScale = d3.scaleLinear()
-    .domain([0, (yearArr.length -1)])
-    .range([padding, w - padding]);
-    console.log(xScale)
-
-  yScale = d3.scaleLinear()
-    .domain([0, d3.max(totalSecondsArr)])
-    .range([0, h - (2*padding)]);
-    console.log(yScale)
-
   yearArr = scattArr.map((item) => {
     return (item[0])
-    });                           
-                                    console.log(yearArr); 
+    });                                                  
 
   timeArr = scattArr.map((item) => {
     return (item[1]).split(":")
     });
-                                    console.log(timeArr); 
+                                  
   totalSecondsArr = (timeArr.map((item) => {
     return (parseInt(item[0]) *60)+(parseInt(item[1]))
     }))
-                                    console.log(totalSecondsArr);      
-                                    console.log(typeof totalSecondsArr[2]);    
+   
+  // xScale = d3.scaleLinear()
+  //   .domain([0, (yearArr.length -1)])
+  //   .range([padding, w - padding]);
+
+//  yScale = d3.scaleLinear()
+//     .domain([0, d3.max(totalSecondsArr)])
+//     .range([0, h - (2*padding)]);
               
   for (let i=0; i<json.length; i++){
     dotArr.push([scattArr[i][0],totalSecondsArr[i],scattArr[i][2]])}  
-    console.log(dotArr)
-
 
   xAxisScale = d3.scaleLinear()
     .domain([d3.min(yearArr), d3.max(yearArr)])
     .range([padding, w - padding])
-  
   
   yAxisScale = d3.scaleLinear()
     .domain([d3.max(totalSecondsArr), d3.min(totalSecondsArr)])
@@ -100,14 +87,16 @@ let  generateAxes = () =>{
     }
 
   
-    let drawDots = () => {
-      svg.selectAll("dots")
-      .data(dotArr)
-      .join("circle")
-      .attr("class", "dot")
-      .attr("r", "5px")
-      .attr("cx",  (d)=>{return d[0]})
-      .attr("cy",  (d)=>{return d[1]})
-      .attr("fill", "black")
-    }
+  let drawDots = () => {
+  svg.selectAll("dots")
+    .data(dotArr)
+    .join("circle")
+    .attr("class", "dot")
+    .attr("r", "4px")
+    .attr("cx",  (d)=>(xAxisScale(d[0])))
+    .attr("data-xvalue", (d)=>(d[0]))
+    .attr("cy",  (d)=>((yAxisScale(d[1]))))
+    .attr("data-yvalue", (d)=>(d[1]))
+    .attr("fill", (d)=> d[2] === false ? "green" : "orange")
+  }
 
