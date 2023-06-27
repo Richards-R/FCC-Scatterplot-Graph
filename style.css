@@ -6,7 +6,7 @@ body {
 }
 
 svg {
-  background: linear-gradient(0.125turn, #b9e8cb, #9198e5);
+  background: linear-gradient(0.125turn, #c0e6cf, #9198e5);
   }
 
 #title{
@@ -22,3 +22,9 @@ svg {
   font-size:.6rem;
   color:grey;
 }
+
+.legend {
+  fill: rgb(46, 95, 114);
+  font-size:.65rem;
+}
+

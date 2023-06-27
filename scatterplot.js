@@ -32,6 +32,8 @@ req.onload = () => {
   generateScales()
   generateAxes()
   drawDots()
+  drawLegend()
+  drawLegendDots ()
   };
                     
 req.send();
@@ -53,12 +55,13 @@ let generateScales = () => {
   //   .domain([0, (yearArr.length -1)])
   //   .range([padding, w - padding]);
 
-//  yScale = d3.scaleLinear()
-//     .domain([0, d3.max(totalSecondsArr)])
-//     .range([0, h - (2*padding)]);
+  //  yScale = d3.scaleLinear()
+  //     .domain([0, d3.max(totalSecondsArr)])
+  //     .range([0, h - (2*padding)]);
               
   for (let i=0; i<json.length; i++){
     dotArr.push([scattArr[i][0],totalSecondsArr[i],scattArr[i][2]])}  
+    console.log(scattArr)
 
   xAxisScale = d3.scaleLinear()
     .domain([d3.min(yearArr), d3.max(yearArr)])
@@ -92,11 +95,29 @@ let  generateAxes = () =>{
     .data(dotArr)
     .join("circle")
     .attr("class", "dot")
-    .attr("r", "4px")
+    .attr("r", "5px")
     .attr("cx",  (d)=>(xAxisScale(d[0])))
     .attr("data-xvalue", (d)=>(d[0]))
     .attr("cy",  (d)=>((yAxisScale(d[1]))))
-    .attr("data-yvalue", (d)=>(d[1]))
+    .attr('data-yvalue',  (d)=>(new Date(d[1] * 1000)))
+    .attr("stroke", "rgb(46, 95, 114)")
+    .attr("opacity", "0.5")
     .attr("fill", (d)=> d[2] === false ? "green" : "orange")
-  }
+    console.log(dotArr[1])
+    console.log(new Date(2215 * 1000).toUTCString().slice());
+    }
+
+let drawLegend = () => {
+  svg.select("rect")
+    .attr("width", "205px")
+    .attr("height", "54px")
+    .attr("x", "380px")
+    .attr("y", "180px")
+    .attr("fill", "none")
+    .attr("stroke", "rgb(46, 95, 114)")
+    .attr("id", "legend")
+
+}
+
+
 
