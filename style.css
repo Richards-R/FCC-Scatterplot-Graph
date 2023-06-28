@@ -28,3 +28,8 @@ svg {
   font-size:.65rem;
 }
 
+#tooltip{
+  font-size:smaller;
+  color: rgb(18, 89, 117)
+}
+

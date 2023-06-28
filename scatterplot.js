@@ -31,12 +31,11 @@ req.onload = () => {
                                   console.log(json.length)
                                   console.log(json[0].Year)
   for (let i=0; i<json.length; i++){
-  scattArr.push([json[i].Year,json[i].Time,!json[i].Doping])}
+  scattArr.push([json[i].Year, json[i].Time, !json[i].Doping, json[i].Name, json[i].Nationality, json[i].Doping])}
 
   generateScales()
   generateAxes()
   drawDots()
-  generateTooltips()
   generateLegend()
    
   };
@@ -67,8 +66,8 @@ const generateScales = () => {
       .range([0, h - (2*padding)]);
               
   for (let i=0; i<json.length; i++){
-    dotArr.push([scattArr[i][0],totalSecondsArr[i],scattArr[i][2]])}  
-    console.log(scattArr)
+    dotArr.push([scattArr[i][0], totalSecondsArr[i], scattArr[i][2], scattArr[i][1], scattArr[i][3], scattArr[i][4], scattArr[i][5]])}  
+    console.log(dotArr)
 
   xAxisScale = d3.scaleLinear()
     .domain([d3.min(yearArr), d3.max(yearArr)])
@@ -109,48 +108,38 @@ const drawDots = () => {
     .attr("stroke", "rgb(46, 95, 114)")
     .attr("opacity", "0.5")
     .attr("fill", (d)=> d[2] === false ? "green" : "orange")
-    console.log(dotArr[1])
-    console.log(new Date(2215 * 1000).toUTCString().slice());
-    }
+    .on("mouseover", (event, item)=>{
+      drawToolTip.transition()
+      .style("visibility", "visible")
+      drawToolTip.text(`${item[4]} (${item[5]}) ${item[0]}　Time ${item[3]}　${item[6]}`)
+      document.querySelector("#tooltip").setAttribute("data-year", item[0])
+    })
+    .on("mouseout", (event, item) => {
+      drawToolTip.transition()
+      .style("visibility", "hidden")
+    })
+}
+    
 
-const generateLegend = () => svg.append("legend")
+let generateLegend = () => svg.append("rect")
     .attr("width", "205px")
     .attr("height", "54px")
     .attr("x", "380px")
     .attr("y", "180px")
     .attr("fill", "none")
-    .attr("stroke", "none")
+    .attr("stroke", "rgb(46, 95, 114)")
     .attr("id", "legend")
-
-    for (let i=0; i<json.length; i++){
-      tooltipArr.push([
-        json[i].Year, 
-        json[i].Time, 
-        json[i].Name + " :", 
-        json[i].Nationality,
-        "Year " +json[i].Year, 
-        "Time " +json[i].Time, 
-        json[i].Doping,
-     ])}  
 
       console.log(tooltipArr)
   
-const generateTooltips = () => {
-        svg.selectAll("rect")
-      .data(tooltipArr)
-      .join("rect")
-      .attr("class", "tooltipclass")
-      .attr("data-xvalue", (d)=>(d[0]))
-      .attr("x",  ((d) => xAxisScale(d[0])))
-      .attr("y",  ((d)=> yAxisScale(d[1])))
-      .attr("width", "40px")
-      .attr("height", "20px")
-      .attr("fill", "red")
-      .attr("id", "tooltip")
-      .attr("key", (d, i)=>(i))
-      .attr("data-year", (d)=>(d[0]))
-      .attr("opacity", 0.5 ) 
-    }
+  let drawToolTip = d3.select("body")
+      .append("div")
+      .attr("id", "tooltip" )
+      .attr("x","40" )
+      .attr("y", "50%")
+      .style("width", "auto")
+      .style("height", "auto")
+      .style("visibility", "hidden")
 
 
 
