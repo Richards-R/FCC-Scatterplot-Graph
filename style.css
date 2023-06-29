@@ -7,16 +7,17 @@ body {
 
 svg {
   background: linear-gradient(0.125turn, #c0e6cf, #9198e5);
-  }
+}
 
-#title{
+#title {
   font-size:x-large;
   fill: rgb(46, 95, 114)
 }
 
-#subtitle{
+#subtitle {
  fill: rgb(0, 98, 128)
 }
+
 
 #y-axis, #x-axis {
   font-size:.6rem;
@@ -28,8 +29,14 @@ svg {
   font-size:.65rem;
 }
 
-#tooltip{
-  font-size:smaller;
-  color: rgb(18, 89, 117)
+#tooltip {
+  position: absolute;
+  padding: 10px;
+  font: 12px sans-serif;
+  color: rgb(46, 95, 114);
+  background: linear-gradient(0.125turn, #c0b97b, #9198e5);
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+  box-shadow: 0 0 5px 5px rgb(207, 206, 158);
 }
-

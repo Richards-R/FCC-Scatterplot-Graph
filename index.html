@@ -12,20 +12,29 @@
 
 <body>
   <svg id="canvas">
-    
+    <defs>
+      <radialGradient id="dopeGrad" cx="50%" cy="50%" r="50%" fx="10%" fy="50%">
+        <stop offset="0%" style="stop-color:rgb(255,255,255);
+        stop-opacity:.9" />
+        <stop offset="100%" style="stop-color:rgb(38, 182, 129);stop-opacity:1" />
+      </radialGradient>
+      <radialGradient id="cleanGrad" cx="50%" cy="50%" r="50%" fx="10%" fy="50%">
+        <stop offset="0%" style="stop-color:rgb(255,255,255);
+        stop-opacity:1" />
+        <stop offset="100%" style="stop-color:rgb(220, 159, 53);stop-opacity:1" />
+      </radialGradient>
+    </defs>
     <text id="title" x ="50%" y="30" text-anchor="middle">Doping in Professional Bicycle Racing</text>
     <text id="subtitle" x ="50%" y="55" text-anchor="middle">35 Fastest times up Alpe d'Huez</text>
     
     <text class = "legend" id = "doping" x = "420" y="202">Riders with doping allegations</text>
-    <circle r= "5px" cx = "400px" cy = "200px" stroke ="rgb(46, 95, 114)" opacity = "0.5" fill = "green"></circle>
+    <circle r= "5px" cx = "400px" cy = "199px" fill = "url(#dopeGrad)"></circle>
     <text class = "legend"  id = "clean" x = "420" y="220">No doping allegations</text>
-    <circle r= "5px" cx = "400px" cy = "217px" stroke ="rgb(46, 95, 114)" opacity = "0.5" fill = "orange"></circle>
+    <circle r= "5px" cx = "400px" cy = "217px" fill = "url(#cleanGrad)"></circle>
     <rect></rect>
-
   </svg>
 </body>
 
 <script defer src="scatterplot.js"></script>
-<script src ="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
 
 </html>
